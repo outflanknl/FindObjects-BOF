@@ -4,7 +4,7 @@ A Cobalt Strike Beacon Object File (BOF) project which uses [direct system calls
 
 ### What is this repository for? ###
 
-* Use direct systems calls within Beacon Object files to enumerate processes for specific loaded modules (e.g. winhttpd.dll, amsi.dll or clr.dll).
+* Use direct systems calls within Beacon Object files to enumerate processes for specific loaded modules (e.g. winhttp.dll, amsi.dll or clr.dll).
 * Use direct systems calls within Beacon Object files to enumerate processes for specific process handles (e.g. lsass.exe).
 * Avoid using the Windows and Native APIs as much as possible (to avoid userland hooks).
 * Execute this code within the beacon process using [Beacon object files](https://www.cobaltstrike.com/help-beacon-object-files) to avoid fork&run.
