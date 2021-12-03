@@ -190,6 +190,10 @@ ZwOpenProcessToken_Check_10_0_XXXX:                       \n\
     je ZwOpenProcessToken_SystemCall_10_0_19042           \n\
     cmp dword ptr [rax+0x120], 19043                      \n\
     je ZwOpenProcessToken_SystemCall_10_0_19043           \n\
+    cmp dword ptr [rax+0x120], 19044                      \n\
+    je ZwOpenProcessToken_SystemCall_10_0_19044           \n\
+    cmp dword ptr [rax+0x120], 22000                      \n\
+    je ZwOpenProcessToken_SystemCall_10_0_22000           \n\
     jmp ZwOpenProcessToken_SystemCall_Unknown             \n\
 ZwOpenProcessToken_SystemCall_6_1_7601:                   \n\
     mov eax, 0xF9                                         \n\
@@ -235,6 +239,12 @@ ZwOpenProcessToken_SystemCall_10_0_19042:                 \n\
     jmp ZwOpenProcessToken_Epilogue                       \n\
 ZwOpenProcessToken_SystemCall_10_0_19043:                 \n\
     mov eax, 0x128                                        \n\
+    jmp ZwOpenProcessToken_Epilogue                       \n\
+ZwOpenProcessToken_SystemCall_10_0_19044:                 \n\
+    mov eax, 0x128                                        \n\
+    jmp ZwOpenProcessToken_Epilogue                       \n\
+ZwOpenProcessToken_SystemCall_10_0_22000:                 \n\
+    mov eax, 0x12E                                        \n\
     jmp ZwOpenProcessToken_Epilogue                       \n\
 ZwOpenProcessToken_SystemCall_Unknown:                    \n\
     ret                                                   \n\
