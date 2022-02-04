@@ -326,6 +326,105 @@ typedef struct _PROCESS_BASIC_INFORMATION {
 	ULONG_PTR ParentProcessId;
 } PROCESS_BASIC_INFORMATION, * PPROCESS_BASIC_INFORMATION;
 
+EXTERN_C NTSTATUS ZwQuerySystemInformation(
+    SYSTEM_INFORMATION_CLASS SystemInformationClass,
+    PVOID SystemInformation,
+    ULONG SystemInformationLength,
+    PULONG ReturnLength
+    );
+
+EXTERN_C NTSTATUS ZwQueryInformationProcess(
+	HANDLE ProcessHandle,
+	DWORD ProcessInformationClass,
+	PVOID ProcessInformation,
+	DWORD ProcessInformationLength,
+	PDWORD ReturnLength
+	);
+
+EXTERN_C NTSTATUS ZwOpenProcess(
+    PHANDLE ProcessHandle, 
+    ACCESS_MASK DesiredAccess, 
+    POBJECT_ATTRIBUTES ObjectAttributes, 
+    PCLIENT_ID ClientId
+    );
+
+EXTERN_C NTSTATUS ZwQueryInformationToken(
+	HANDLE TokenHandle,
+	TOKEN_INFORMATION_CLASS TokenInformationClass,
+	PVOID TokenInformation,
+	ULONG TokenInformationLength,
+	PULONG ReturnLength
+	);
+
+EXTERN_C NTSTATUS ZwAdjustPrivilegesToken(
+    IN HANDLE TokenHandle,
+    IN BOOLEAN DisableAllPrivileges,
+    IN PTOKEN_PRIVILEGES TokenPrivileges,
+    IN ULONG PreviousPrivilegesLength,
+    OUT PTOKEN_PRIVILEGES PreviousPrivileges OPTIONAL,
+    OUT PULONG RequiredLength OPTIONAL
+    );
+
+EXTERN_C NTSTATUS ZwAllocateVirtualMemory(
+    HANDLE ProcessHandle, 
+    PVOID *BaseAddress, 
+    ULONG_PTR ZeroBits, 
+    PSIZE_T RegionSize, 
+    ULONG AllocationType, 
+    ULONG Protect
+    );
+
+EXTERN_C NTSTATUS ZwFreeVirtualMemory(
+    HANDLE ProcessHandle, 
+    PVOID *BaseAddress, 
+    IN OUT PSIZE_T RegionSize, 
+    ULONG FreeType
+    );
+
+EXTERN_C NTSTATUS ZwReadVirtualMemory(
+    HANDLE hProcess, 
+    PVOID lpBaseAddress, 
+    PVOID lpBuffer, 
+    SIZE_T NumberOfBytesToRead, 
+    PSIZE_T NumberOfBytesRead
+    );
+
+EXTERN_C NTSTATUS ZwWriteVirtualMemory(
+    HANDLE hProcess, 
+    PVOID lpBaseAddress, 
+    PVOID lpBuffer, 
+    SIZE_T NumberOfBytesToWrite, 
+    PSIZE_T NumberOfBytesWrite
+    );
+
+EXTERN_C NTSTATUS ZwDuplicateObject(
+	HANDLE SourceProcessHandle,
+	HANDLE SourceHandle,
+	HANDLE TargetProcessHandle,
+	PHANDLE TargetHandle,
+	ACCESS_MASK DesiredAccess,
+	ULONG Attributes,
+	ULONG Options
+	);
+
+EXTERN_C NTSTATUS ZwQueryObject(
+	HANDLE ObjectHandle,
+	ULONG ObjectInformationClass,
+	PVOID ObjectInformation,
+	ULONG ObjectInformationLength,
+	PULONG ReturnLength
+	);
+
+EXTERN_C NTSTATUS ZwClose(
+    IN HANDLE KeyHandle
+    );
+
+typedef NTSTATUS(NTAPI* _NtOpenProcessToken)(
+	IN HANDLE ProcessHandle,
+	IN ACCESS_MASK DesiredAccess,
+	OUT PHANDLE TokenHandle
+	);
+
 typedef PULONG(NTAPI *_RtlSubAuthoritySid)(
 	PSID  Sid,
 	ULONG SubAuthority

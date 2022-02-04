@@ -10,7 +10,13 @@ BOOL IsElevated() {
 	BOOL fRet = FALSE;
 	HANDLE hToken = NULL;
 
-	NTSTATUS status = ZwOpenProcessToken(NtCurrentProcess(), TOKEN_QUERY, &hToken);
+	_NtOpenProcessToken NtOpenProcessToken = (_NtOpenProcessToken)
+		GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtOpenProcessToken");
+	if (NtOpenProcessToken == NULL) {
+		return FALSE;
+	}
+
+	NTSTATUS status = NtOpenProcessToken(NtCurrentProcess(), TOKEN_QUERY, &hToken);
 	if (status == STATUS_SUCCESS) {
 		TOKEN_ELEVATION Elevation = { 0 };
 		ULONG ReturnLength;
@@ -32,7 +38,13 @@ BOOL SetDebugPrivilege() {
 	HANDLE hToken = NULL;
 	TOKEN_PRIVILEGES TokenPrivileges = { 0 };
 
-	NTSTATUS status = ZwOpenProcessToken(NtCurrentProcess(), TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken);
+	_NtOpenProcessToken NtOpenProcessToken = (_NtOpenProcessToken)
+		GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtOpenProcessToken");
+	if (NtOpenProcessToken == NULL) {
+		return FALSE;
+	}
+
+	NTSTATUS status = NtOpenProcessToken(NtCurrentProcess(), TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken);
 	if (status != STATUS_SUCCESS) {
 		return FALSE;
 	}
